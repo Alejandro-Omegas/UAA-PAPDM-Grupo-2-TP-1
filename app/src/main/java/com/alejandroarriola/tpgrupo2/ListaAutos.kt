@@ -1,7 +1,6 @@
 package com.alejandroarriola.tpgrupo2
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -23,11 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 
 //Dibuja la lista de autos registras. No se muestra por default al estar la lista vacio por defecto
 @Composable
@@ -46,7 +43,7 @@ fun ListaAutos(listaAutos: MutableList<Auto>) {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(listaAutos) {
-            TarjetaAuto(auto = it, { listaAutos.remove(it) })
+            TarjetaAuto(listaAutos = listaAutos, auto = it)
         }
     }
 }
@@ -55,8 +52,8 @@ fun ListaAutos(listaAutos: MutableList<Auto>) {
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 fun TarjetaAuto(
-    auto: Auto,
-    onEliminarAuto: () -> Unit
+    listaAutos: MutableList<Auto>,
+    auto: Auto
 ) {
     Card(
         modifier = Modifier
@@ -85,7 +82,7 @@ fun TarjetaAuto(
             BoxWithConstraints(
                 modifier = Modifier.fillMaxWidth().height(120.dp)
             ) {
-                //val anchoPantalla = 95.dp
+                //val anchoPantalla = 95.dp --can be deleted
 
                 LazyRow( //LazyRow solo admite "items" por lo que deben construirse las piezas en item{ }
                     modifier = Modifier.fillMaxWidth()
@@ -105,7 +102,7 @@ fun TarjetaAuto(
             Spacer(modifier = Modifier.height(8.dp))
 
             Button(
-                onClick = onEliminarAuto,
+                onClick = { listaAutos.remove(auto) },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text("Eliminar")
