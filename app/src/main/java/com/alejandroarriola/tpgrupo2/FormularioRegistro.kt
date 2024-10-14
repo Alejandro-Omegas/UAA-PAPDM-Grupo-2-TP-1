@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+//Carga la primera parte del UI con el formulario para regitrar el auto
 @Composable
 fun FormularioRegistro(
     marca: String,

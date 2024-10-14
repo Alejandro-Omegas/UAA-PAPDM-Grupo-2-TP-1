@@ -1,10 +1,10 @@
 package com.alejandroarriola.tpgrupo2
 
 data class Auto(
-    val marca: String,
-    val modelo: String,
-    val anho: String,
-    val precio: String,
+    var marca: String,
+    var modelo: String,
+    var anho: String,
+    var precio: String,
     val kilometraje: String,
     val imagenUrl: String
 )
