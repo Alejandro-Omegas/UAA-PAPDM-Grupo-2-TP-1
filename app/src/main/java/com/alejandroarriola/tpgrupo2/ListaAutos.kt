@@ -34,7 +34,7 @@ import java.util.Locale
 //Dibuja la lista de autos registras. No se muestra por default al estar la lista vacio por defecto
 @Composable
 fun ListaAutos(listaAutos: MutableList<Auto>) {
-    Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(8.dp))
 
     Text(
         "Lista de Autos",

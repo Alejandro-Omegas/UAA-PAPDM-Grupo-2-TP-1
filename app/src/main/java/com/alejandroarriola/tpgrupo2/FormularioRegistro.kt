@@ -40,7 +40,7 @@ fun FormularioRegistro(
             style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = marca,
@@ -49,7 +49,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = modelo,
@@ -58,7 +58,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = anho,
@@ -68,7 +68,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = precio,
@@ -78,7 +78,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = kilometraje,
@@ -88,7 +88,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         TextField(
             value = imagenURL,
@@ -98,7 +98,7 @@ fun FormularioRegistro(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(4.dp))
 
         Button(
             onClick = onRegistrarAuto,
