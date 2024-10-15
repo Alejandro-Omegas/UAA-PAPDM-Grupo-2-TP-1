@@ -1,6 +1,7 @@
 package com.alejandroarriola.tpgrupo2
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -22,9 +23,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.alejandroarriola.tpgrupo2.ui.theme.inversePrimaryDark
+import java.util.Locale
+
 
 //Dibuja la lista de autos registras. No se muestra por default al estar la lista vacio por defecto
 @Composable
@@ -36,7 +41,7 @@ fun ListaAutos(listaAutos: MutableList<Auto>) {
         style = MaterialTheme.typography.headlineMedium
     )
 
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(4.dp))
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth(),
@@ -58,16 +63,19 @@ fun TarjetaAuto(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        shape = RoundedCornerShape(8.dp)
+            .padding(4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp),
+        border = BorderStroke(2.dp, inversePrimaryDark)
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
         ) {
             Text(
                 text = auto.marca,
-                style = MaterialTheme.typography.headlineSmall
+                style = MaterialTheme.typography.headlineMedium
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -80,26 +88,28 @@ fun TarjetaAuto(
             Spacer(modifier = Modifier.height(8.dp))
 
             BoxWithConstraints(
-                modifier = Modifier.fillMaxWidth().height(120.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
             ) {
                 //val anchoPantalla = 95.dp --can be deleted
 
                 LazyRow( //LazyRow solo admite "items" por lo que deben construirse las piezas en item{ }
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    item{ InfoAuto(titulo = "Año", valor = auto.anho, ancho = 60.dp) }
-                    item{ InfoAuto(titulo = "Precio", valor = auto.precio, ancho = 120.dp) }
-                    item{ InfoAuto(titulo = "Kms", valor = auto.kilometraje, ancho = 120.dp) }
+                    item{ InfoAuto(titulo = "Año", valor = auto.anho, ancho = 70.dp) }
+                    item{ InfoAuto(titulo = "Precio", valor = auto.precio, ancho = 130.dp) }
+                    item{ InfoAuto(titulo = "Kms", valor = auto.kilometraje, ancho = 130.dp) }
                     item{ AsyncImage(
                         model = auto.imagenUrl,
                         contentDescription = null,
+                        placeholder = painterResource(R.drawable.placeholder_image),
+                        error = painterResource(R.drawable.placeholder_image),
                         modifier = Modifier
                             .size(100.dp)
                     ) }
                 }
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             Button(
                 onClick = { listaAutos.remove(auto) },
@@ -126,8 +136,7 @@ fun InfoAuto(titulo: String, valor: String, ancho: Dp) {
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        Text(text = valor, style = MaterialTheme.typography.headlineSmall)
-
-        Spacer(modifier = Modifier.height(4.dp))
+        //Text(text = valor, style = MaterialTheme.typography.headlineSmall)
+        Text(text = String.format(Locale.GERMANY, "%,d", valor.toInt()), style = MaterialTheme.typography.headlineSmall)
     }
 }

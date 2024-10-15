@@ -12,6 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
+import java.util.Calendar
 
 //dibuja la pantalla: por una parte el formulario de registro, y debjao la lista de autos registrados (no se muestra al arrancar el app por no tiener registros aun)
 @Composable
@@ -23,6 +25,7 @@ fun PantallaRegistro() {
     var precio by remember { mutableStateOf("") }
     var kilometraje by remember { mutableStateOf("") }
     var imagenURL by remember { mutableStateOf("") }
+    val regex = "^(https?://)?(www\\.)?([\\w-]+\\.)+[a-z]{2,}/?.*$" //expresion regular para verificar validez de URL
 
     Column(modifier = Modifier.padding(16.dp)) {
         FormularioRegistro(
@@ -34,19 +37,40 @@ fun PantallaRegistro() {
             imagenURL = imagenURL,
             onMarcaChange = { marca = it },
             onModeloChange = { modelo = it },
-            onAnhoChange = { anho = it},
-            onPrecioChange = { precio = it},
-            onKilometrajeChange = { kilometraje = it},
+            onAnhoChange = { if(it.length <= 4) { anho = it } },
+            onPrecioChange = { if(it.length <= 8) { precio = it } },
+            onKilometrajeChange = { if(it.length <= 8) { kilometraje = it } },
             onImagenURLChange = { imagenURL = it},
             onRegistrarAuto = {
-                val nuevoAuto = Auto(marca, modelo, anho, precio, kilometraje, imagenURL)
-                listaAutos.add(nuevoAuto)
-                marca = ""
-                modelo = ""
-                anho = ""
-                precio = ""
-                kilometraje = ""
-                imagenURL = ""
+                if(marca.isNotBlank()
+                    && modelo.isNotBlank()
+                    && precio.isDigitsOnly()
+                    && anho.isDigitsOnly()
+                    && kilometraje.isDigitsOnly()) {
+                    if(anho.toInt() > Calendar.getInstance().get(Calendar.YEAR)) {
+                        anho = Calendar.getInstance().get(Calendar.YEAR).toString()
+                    } else if(anho.toInt() < 1900) {
+                        anho = "1900"
+                    }
+
+                    if(precio.toInt() < 0) { precio = "0" }
+                    else if(precio.toInt() > 99999999) { precio = "99999999" }
+
+                    if(kilometraje.toInt() < 0) { kilometraje = "0" }
+                    else if(kilometraje.toInt() > 99999999) { kilometraje = "99999999" }
+
+                    if(regex.toRegex().matches(imagenURL)) { //chequea si es una url valida
+                        val nuevoAuto = Auto(marca, modelo, anho, precio, kilometraje, imagenURL)
+                        listaAutos.add(nuevoAuto)
+
+                        marca = ""
+                        modelo = ""
+                        anho = ""
+                        precio = ""
+                        kilometraje = ""
+                        imagenURL = ""
+                    }
+                }
             }
         )
 
@@ -55,3 +79,5 @@ fun PantallaRegistro() {
         ListaAutos(listaAutos = listaAutos)
     }
 }
+
+
